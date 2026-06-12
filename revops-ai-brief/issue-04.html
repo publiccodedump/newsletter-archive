@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>The RevOps AI Brief: Issue #4</title>
+  <style>
+    @media (max-width:620px) {
+      .container { width:100% !important; }
+      .px { padding-left:20px !important; padding-right:20px !important; }
+      h1 { font-size:24px !important; }
+    }
+    @media (prefers-color-scheme: dark) {
+      body, .bg { background:#0f1115 !important; }
+      .card { background:#1a1d24 !important; }
+      .ink, h1, h2, p { color:#e8e8ea !important; }
+      .rule { border-color:#2a2e37 !important; }
+    }
+  </style>
+</head>
+<body class="bg" style="margin:0;padding:0;background:#f4f4f5;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">This week: pipeline Monte Carlo on top of Attention&#x27;s OSS, Databricks&#x27; CRO on Genie, and why workflows still beat agents.&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
+  <table role="presentation" class="bg" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;">
+    <tr><td align="center" style="padding:24px 12px;">
+      <table role="presentation" class="container card" width="600" cellpadding="0" cellspacing="0"
+             style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;
+                    box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+        <!-- Header -->
+        <tr><td class="px" style="padding:32px 32px 8px;">
+          <p style="margin:0 0 4px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:12px;letter-spacing:1.5px;
+             text-transform:uppercase;color:#2563eb;font-weight:700;">Newsletter · 2026-06-11</p>
+          <h1 class="ink" style="margin:0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:28px;line-height:1.25;
+             color:#1a1a1a;font-weight:800;">The RevOps AI Brief: Issue #4</h1>
+        </td></tr>
+        <!-- Intro -->
+        <tr><td class="px" style="padding:16px 32px 0;"><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">Hope you&#x27;re having a great week!</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">This week&#x27;s issue is heavy on real builds and real CROs. Anis Bennaceur (Attention) open-sourced his sales-brain stack, and a founder built a Monte Carlo pipeline forecast on top of it inside a day. Databricks&#x27; CRO walks through exactly how he uses his own AI tool (Genie) to run his daily RevOps cadence at $5B+ ARR. And there&#x27;s a clean lesson tucked inside both: a lot of the &quot;agent&quot; hype isn&#x27;t where the wins live yet.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">Three builds you can copy, plus where this is heading.</p></td></tr>
+        <tr><td style="padding:8px 32px 0;"><div class="rule" style="border-top:1px solid #e5e7eb;
+            line-height:1px;font-size:1px;">&nbsp;</div></td></tr>
+        <!-- Sections -->
+        
+            <tr><td style="padding:8px 32px 0;">
+              <h2 style="margin:0 0 12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:20px;
+                  line-height:1.3;color:#1a1a1a;font-weight:700;">Build 1: A Monte Carlo forecast on top of Attention&#x27;s open-source sales brain</h2>
+              <p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">Last week Anis Bennaceur, CEO of Attention, open-sourced (his words) a dialed-down version of his sales-coaching stack [1]. Sam Nadler at Rise Labs spent a day building on top: he took Attention&#x27;s per-call scores, ran 10,000 Monte Carlo trials across the open pipeline, and put the AI forecast head-to-head with what reps committed in the CRM. Result was a dashboard that not only forecasts revenue but also explains <em>why</em> a deal dropped (his demo flagged a fictional &quot;Helios Northstar&quot; as promising until a board-level vendor-risk gate was introduced two weeks ago).</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">This is the pattern: stop treating call summaries as something you read after the fact. Make them an input to forecasting.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Tools:</strong> Attention&#x27;s open-source sales-coaching repo [1], a Monte Carlo simulation in Python, your CRM as the commit baseline.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Impact:</strong> In Sam&#x27;s demo (his own fake data), AI forecast came in at $1.17M against a $1.44M rep commit, with deal-level explanations and a CRO-friendly &quot;delta vs CRM&quot; view [1]. He flagged it as a prototype, not production. Anis said on the show: &quot;the whole Monte Carlo simulation, we&#x27;ve never done it, we&#x27;ve never even thought about it.&quot;</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Build it yourself:</strong></p><ol style="margin:0 0 16px;padding-left:24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><li style="margin:0 0 6px;">Pull per-call scores (or sentiment + risk flags) for every open deal from Attention OSS, Gong, or your conversation-intel tool.</li><li style="margin:0 0 6px;">For each deal, sample a close-probability distribution from those scores plus stage history.</li><li style="margin:0 0 6px;">Run 10k Monte Carlo trials across the open pipeline, then compare the mean against the rep commit field in CRM.</li><li style="margin:0 0 6px;">Surface deals where the AI distribution and CRM stage disagree most. Those are your forecast call agenda.</li></ol><p style="margin:0 0 8px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;color:#6b7280;">Sources: <a href="#src-1" style="color:#6b7280;text-decoration:none;">[1]</a></p>
+            </td></tr>
+            <tr><td style="padding:0 32px;"><div style="border-top:1px solid #e5e7eb;
+                line-height:1px;font-size:1px;">&nbsp;</div></td></tr>
+            
+            <tr><td style="padding:8px 32px 0;">
+              <h2 style="margin:0 0 12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:20px;
+                  line-height:1.3;color:#1a1a1a;font-weight:700;">Build 2: A $5B CRO runs his daily RevOps cadence through one text-to-SQL agent</h2>
+              <p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">Ron Gabrisko (CRO at Databricks, $5.4B ARR, growing 65% YoY) sat down on Mostly Growth and walked through exactly how he uses Databricks&#x27; own Genie tool [2]. It&#x27;s the cleanest &quot;AI for RevOps&quot; workflow I&#x27;ve seen described by a CRO on tape this year.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">His daily ask of Genie, paraphrased: where is my pipeline weak, which customers might churn in this region, which programs would close the gap, and what&#x27;s the predicted outcome if I run them. Genie writes the SQL, makes the predictions, and builds the charts off proprietary CRM data, then suggests programs and forecasts their results.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Tools:</strong> Databricks Genie on top of their CRM warehouse [2]. The same pattern works with Salesforce Einstein, HubSpot Breeze, or a custom text-to-SQL wrapper over your data warehouse (BCG flags this exact pattern as the move from &quot;prediction&quot; to &quot;execution&quot; in RevOps [4]).</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Impact:</strong> Ron&#x27;s own numbers (his claims, on his own podium): consumption revenue predictable to within 1-2%, every rep has a personalized AI interface that surfaces next-best customer + next-best product + recommended programs, and CFOs of their biggest banks now mandate Genie use top-down [2].</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Build it yourself:</strong></p><ol style="margin:0 0 16px;padding-left:24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><li style="margin:0 0 6px;">Get your CRM, billing, and product-usage data into one warehouse (Snowflake / Databricks / BigQuery).</li><li style="margin:0 0 6px;">Layer a text-to-SQL+narrative tool on top (Genie, Einstein Copilot, HubSpot Breeze, or a thin LangChain/Claude wrapper).</li><li style="margin:0 0 6px;">Pre-bake three canned weekly questions for your forecast call: &quot;where am I weak by segment&quot;, &quot;who&#x27;s likely to churn in the next 60 days&quot;, &quot;what 2 programs would close my forecast gap&quot;.</li><li style="margin:0 0 6px;">Push the answers back as CRM tasks so the recommendation actually gets executed, not just admired.</li></ol><p style="margin:0 0 8px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;color:#6b7280;">Sources: <a href="#src-2" style="color:#6b7280;text-decoration:none;">[2]</a> <a href="#src-4" style="color:#6b7280;text-decoration:none;">[4]</a></p>
+            </td></tr>
+            <tr><td style="padding:0 32px;"><div style="border-top:1px solid #e5e7eb;
+                line-height:1px;font-size:1px;">&nbsp;</div></td></tr>
+            
+            <tr><td style="padding:8px 32px 0;">
+              <h2 style="margin:0 0 12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:20px;
+                  line-height:1.3;color:#1a1a1a;font-weight:700;">Build 3: The boring agent that earns the right to do everything else (CRM autofill)</h2>
+              <p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">Easy to miss inside the Attention demo was the bigger lesson Anis kept hammering: &quot;Coaching is a vitamin. People want to buy painkillers. And the biggest painkiller was filling the CRM&quot; [1]. Every customer he talks to (he said he spoke with one of the fastest-growing AI-native scaleups yesterday) still leads with &quot;can you fill our Salesforce?&quot; Yes. BCG&#x27;s June report makes the same point a different way: AI-powered sales assistants that automatically execute CRM updates are now the foundation that makes pipeline scoring, autonomous lead routing, and forecasting actually work [4]. Garbage in, garbage forecast.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Tools:</strong> Attention, Gong, or Clari for call/email capture, plus Salesforce/HubSpot as the destination [1][3].</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Impact:</strong> Anis flagged that Attention captures every CRM field (not just summaries) including very specific ones (e.g. &quot;date of the competitor&#x27;s contract renewal&quot;) that an SDR will basically never log by hand [1]. Warmly&#x27;s 2026 RevOps guide separately reports that Gong Forecast now tracks 300+ signals per deal pulled from calls, emails, and engagement [3]. None of that downstream signal exists if the fields are empty.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><strong>Build it yourself:</strong></p><ol style="margin:0 0 16px;padding-left:24px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;"><li style="margin:0 0 6px;">List the 8-12 CRM fields your forecast model actually relies on (next steps, economic buyer, mutual close plan, competitor, blocker, etc).</li><li style="margin:0 0 6px;">Wire an autofill agent (Attention, Gong, or your own LLM + Composio + Salesforce API) to write <em>only</em> those fields.</li><li style="margin:0 0 6px;">Add a write-back log so reps can see exactly which fields the agent touched and why.</li><li style="margin:0 0 6px;">Audit weekly: sample 20 calls, compare auto-filled values to ground truth, tune the prompts on the misses.</li></ol><p style="margin:0 0 8px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;color:#6b7280;">Sources: <a href="#src-1" style="color:#6b7280;text-decoration:none;">[1]</a> <a href="#src-3" style="color:#6b7280;text-decoration:none;">[3]</a> <a href="#src-4" style="color:#6b7280;text-decoration:none;">[4]</a></p>
+            </td></tr>
+            <tr><td style="padding:0 32px;"><div style="border-top:1px solid #e5e7eb;
+                line-height:1px;font-size:1px;">&nbsp;</div></td></tr>
+            
+            <tr><td style="padding:8px 32px 0;">
+              <h2 style="margin:0 0 12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:20px;
+                  line-height:1.3;color:#1a1a1a;font-weight:700;">Where this is heading: in 2026, deterministic workflows are still the right default for RevOps</h2>
+              <p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">One bit from the Attention episode that surprised me, coming from an AI-native B2B founder: &quot;In a lot of cases, deterministic workflows tend to work as well if not better than stochastic agents. So if you can actually automate a lot of your business through workflows rather than agents, even in 2026, then there&#x27;s a lot of [cost] that you can save&quot; [1]. The co-host agreed, said he had not found one RevOps use case where the agent SDK beat a plain workflow + LLM calls.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">This matters because every vendor pitch this quarter (Hyperscayle&#x27;s 12-month &quot;RevOps AI transformation program&quot;, say, which sells exactly the autonomous-agent narrative [5]) wants you reaching for the agentic option first.</p><p style="margin:0 0 16px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a;">The RevOps move: map the workflow first (stages, branches, write destinations), then ask which steps actually need probabilistic judgment. Most of routing, scoring, hygiene, and reporting are deterministic with one or two LLM-graded steps. Save the agents for the genuinely branchy stuff (multi-threading outreach, deal-recovery playbooks, freeform research) where the path is not knowable in advance.</p><p style="margin:0 0 8px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:13px;color:#6b7280;">Sources: <a href="#src-1" style="color:#6b7280;text-decoration:none;">[1]</a> <a href="#src-5" style="color:#6b7280;text-decoration:none;">[5]</a></p>
+            </td></tr>
+            <tr><td style="padding:0 32px;"><div style="border-top:1px solid #e5e7eb;
+                line-height:1px;font-size:1px;">&nbsp;</div></td></tr>
+            
+        <!-- Sources -->
+        
+            <tr><td style="padding:16px 32px 0;">
+              <p style="margin:0 0 8px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:12px;letter-spacing:1.5px;
+                 text-transform:uppercase;color:#6b7280;font-weight:700;">Sources</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr id="src-1"><td style="padding:4px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                  font-size:13px;line-height:1.5;color:#6b7280;">
+                  <span style="color:#1a1a1a;">[1]</span>
+                  <a href="https://www.youtube.com/watch?v=A37w5IXtRdA" style="color:#2563eb;text-decoration:none;"
+                     target="_blank" rel="noopener">Built This Week: Anis Bennaceur (Attention) on open-sourcing sales coaching + a Monte Carlo pipeline forecast demo</a>
+                  <span style="color:#6b7280;"> · youtube.com</span></td></tr><tr id="src-2"><td style="padding:4px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                  font-size:13px;line-height:1.5;color:#6b7280;">
+                  <span style="color:#1a1a1a;">[2]</span>
+                  <a href="https://www.youtube.com/watch?v=jdJNGc3PE1s" style="color:#2563eb;text-decoration:none;"
+                     target="_blank" rel="noopener">Mostly Growth: Databricks CRO Ron Gabrisko on how he runs RevOps via Genie at $5.4B ARR</a>
+                  <span style="color:#6b7280;"> · youtube.com</span></td></tr><tr id="src-3"><td style="padding:4px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                  font-size:13px;line-height:1.5;color:#6b7280;">
+                  <span style="color:#1a1a1a;">[3]</span>
+                  <a href="https://www.warmly.ai/p/blog/ai-for-revops" style="color:#2563eb;text-decoration:none;"
+                     target="_blank" rel="noopener">Warmly: AI for RevOps Best Use Cases &amp; Software in 2026</a>
+                  <span style="color:#6b7280;"> · warmly.ai</span></td></tr><tr id="src-4"><td style="padding:4px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                  font-size:13px;line-height:1.5;color:#6b7280;">
+                  <span style="color:#1a1a1a;">[4]</span>
+                  <a href="https://www.bcg.com/publications/2025/ai-was-made-for-revops-from-prediction-to-execution" style="color:#2563eb;text-decoration:none;"
+                     target="_blank" rel="noopener">BCG: AI Was Made for RevOps, From Prediction to Execution</a>
+                  <span style="color:#6b7280;"> · bcg.com</span></td></tr><tr id="src-5"><td style="padding:4px 0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                  font-size:13px;line-height:1.5;color:#6b7280;">
+                  <span style="color:#1a1a1a;">[5]</span>
+                  <a href="https://hyperscayle.com/what-we-do/revops-ai-transformation-program" style="color:#2563eb;text-decoration:none;"
+                     target="_blank" rel="noopener">Hyperscayle: RevOps AI Transformation Program</a>
+                  <span style="color:#6b7280;"> · hyperscayle.com</span></td></tr></table>
+            </td></tr>
+        
+        <!-- Footer -->
+        <tr><td class="px" style="padding:24px 32px 32px;">
+          <p style="margin:0;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:12px;line-height:1.5;color:#6b7280;">You&#x27;re receiving this because you asked for it. Reply to unsubscribe.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
